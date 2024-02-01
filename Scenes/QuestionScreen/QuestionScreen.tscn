@@ -1,0 +1,113 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/QuizButton.tres" type="Theme" id=1]
+[ext_resource path="res://Assets/Skranji-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Scenes/QuestionScreen/QuestionScreen.gd" type="Script" id=3]
+[ext_resource path="res://Assets/chickweed titling.otf" type="DynamicFontData" id=4]
+[ext_resource path="res://Assets/button_text.tres" type="DynamicFont" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 19
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 64
+font_data = ExtResource( 4 )
+
+[node name="QuestionScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( -769, -374 )
+script = ExtResource( 3 )
+
+[node name="QuestionLabel" type="RichTextLabel" parent="."]
+margin_left = 239.0
+margin_top = 99.0
+margin_right = 647.0
+margin_bottom = 583.0
+grow_horizontal = 0
+grow_vertical = 0
+custom_fonts/normal_font = SubResource( 1 )
+text = "Who said \"Facts are stupid things\"?"
+fit_content_height = true
+scroll_active = false
+
+[node name="AnswersContainer" type="VBoxContainer" parent="."]
+margin_left = 236.0
+margin_top = 266.0
+margin_right = 642.0
+margin_bottom = 448.0
+
+[node name="AnswerButton1" type="Button" parent="AnswersContainer"]
+margin_right = 406.0
+margin_bottom = 38.0
+theme = ExtResource( 1 )
+text = "Ronald Reagan"
+
+[node name="AnswerButton2" type="Button" parent="AnswersContainer"]
+margin_top = 42.0
+margin_right = 406.0
+margin_bottom = 80.0
+theme = ExtResource( 1 )
+text = "Peter Löwenbräu Griffin"
+
+[node name="AnswerButton3" type="Button" parent="AnswersContainer"]
+margin_top = 84.0
+margin_right = 406.0
+margin_bottom = 122.0
+theme = ExtResource( 1 )
+text = "Jack Sparrow"
+
+[node name="QuestionTimer" type="Timer" parent="."]
+wait_time = 20.0
+one_shot = true
+
+[node name="AnswerTimer" type="Timer" parent="."]
+wait_time = 20.0
+one_shot = true
+
+[node name="Timer" type="Control" parent="."]
+margin_left = 798.0
+margin_top = 226.0
+margin_right = 1148.0
+margin_bottom = 476.0
+rect_rotation = 13.2
+rect_scale = Vector2( 0.65, 0.65 )
+
+[node name="Label" type="Label" parent="Timer"]
+margin_left = 77.3116
+margin_top = 46.6554
+margin_right = 253.312
+margin_bottom = 109.655
+custom_fonts/font = ExtResource( 5 )
+text = "TIMER"
+align = 1
+
+[node name="Label2" type="Label" parent="Timer"]
+visible = false
+margin_left = 67.399
+margin_top = 112.189
+margin_right = 255.399
+margin_bottom = 197.189
+custom_fonts/font = SubResource( 2 )
+text = "66:66"
+align = 1
+valign = 1
+
+[node name="ContinueButton" type="Button" parent="."]
+visible = false
+margin_left = 236.0
+margin_top = 419.0
+margin_right = 642.0
+margin_bottom = 462.0
+theme = ExtResource( 1 )
+text = "Continue"
+
+[node name="QuipSounds" type="AudioStreamPlayer" parent="."]
+
+[connection signal="pressed" from="AnswersContainer/AnswerButton1" to="." method="_on_AnswerButton1_pressed"]
+[connection signal="pressed" from="AnswersContainer/AnswerButton2" to="." method="_on_AnswerButton2_pressed"]
+[connection signal="pressed" from="AnswersContainer/AnswerButton3" to="." method="_on_AnswerButton3_pressed"]
+[connection signal="timeout" from="QuestionTimer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="AnswerTimer" to="." method="_on_AnswerTimer_timeout"]
+[connection signal="pressed" from="ContinueButton" to="." method="_on_ContinueButton_pressed"]

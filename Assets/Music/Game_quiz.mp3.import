@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Game_quiz.mp3-61109bcd4603ed2457e41b34d61e6de3.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/Game_quiz.mp3"
+dest_files=[ "res://.import/Game_quiz.mp3-61109bcd4603ed2457e41b34d61e6de3.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/big_screen.png-48f62c70636bf2b0d77a3c621f47c05c.image"
+
+[deps]
+
+source_file="res://Assets/big_screen.png"
+dest_files=[ "res://.import/big_screen.png-48f62c70636bf2b0d77a3c621f47c05c.image" ]
+
+[params]
+

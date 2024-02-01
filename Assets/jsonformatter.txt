@@ -1,0 +1,25 @@
+{
+  "questions": [
+    {
+      "question": "Who suggested that injecting bleach could cure you from COVID?",
+      "answer1": "Donald Trump",
+      "answer2": "Donald Duck",
+      "answer3": "Your Drunk Uncle",
+      "message": "As crazy as it may sound, Donald Trump, former US President and liar extraordinaire, did not encourage people to inject bleach in order to cure them from COVID."
+    },
+    {
+      "question": "Who said sheep can self-medicate?",
+      "answer1": "Jane Goodall",
+      "answer2": "The Animal Welfare Party",
+      "answer3": "People for the Ethical Treatment of Animals",
+      "message": "In an experiment, it was found that sheep can acquire knowledge about food based on different flavors. When the animals are sick, they could use this knowledge purposefully to treat themselves by choosing plants with healing effects based on taste."
+    },
+    {
+      "question": "lalala",
+      "answer1": "denial",
+      "answer2": "roast",
+      "answer3": "33333333",
+      "message": "denial.roast@learningcontainer.com"
+    }
+  ]
+}
