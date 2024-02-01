@@ -1,14 +1,25 @@
 extends Control
 
 var question_pool = []
-#export var _questions_started: bool = false
 const NUMBER_OF_QUESTIONS = 5
 var remaining_questions
 var parsed_json
 var current_question
-# Called when the node enters the scene tree for the first time.
+#Path to the question JSON
+var file_path = "res://Assets/csvjson.json"
+var question_pool_size: int = 0
+
 func _ready():
 	SignalManager.connect("questions_started", self, "_questions_started")
+	var file = File.new()
+	if file.open(file_path, File.READ) == OK: # Read the entire content of the file
+		var file_text = file.get_as_text() # Close the file
+		file.close()
+		parsed_json = JSON.parse(file_text)
+		#example
+		#print(parsed_json.result)
+		#question_pool_size = parsed_json.result["questions"].size()
+		question_pool_size = parsed_json.result.size()
 	reset_scene()
 	
 
@@ -47,6 +58,7 @@ func _display_new_question():
 	$AnswersContainer/AnswerButton3.text = parsed_json.result[current_question]["answer3"]
 	
 func _on_Timer_timeout():
+	SoundManager.play_sound($QuipSounds, "WRONG_ANSWER")
 	_display_answer()
 		
 func _display_answer():
@@ -60,22 +72,21 @@ func _display_answer():
 
 
 func _on_AnswerTimer_timeout():
-	if remaining_questions > 0:
-		_get_new_question()
-	else:
-		SignalManager.emit_signal("on_game_ended")
-		print("game ended")
+	_get_new_questions()
 
-	
 func _on_answer_given():
 	_display_answer()
 	$QuestionTimer.stop()
 	
 func _on_ContinueButton_pressed():
 	SoundManager.play_sound($QuipSounds, "BUTTON_CLICK")
+	_get_new_questions()
+		
+func _get_new_questions():
+	$ContinueButton.visible = false
+	$AnswerTimer.stop()
 	if remaining_questions > 0:
 		_get_new_question()
-		$ContinueButton.visible = false
 	else:
 		SignalManager.emit_signal("on_game_ended")
 		print("game ended")
@@ -84,21 +95,10 @@ func reset_scene():
 	set_process(false)
 	$ContinueButton.visible = false
 	remaining_questions = NUMBER_OF_QUESTIONS
-	var file = File.new()
-	#var file_path = "res://Assets/jsonformatter.txt"
-	var file_path = "res://Assets/csvjson.json"
-	var question_pool_size = 0
-	if file.open(file_path, File.READ) == OK: # Read the entire content of the file
-		var file_text = file.get_as_text() # Close the file
-		file.close()
-		parsed_json = JSON.parse(file_text)
-		#example
-		#print(parsed_json.result)
-		#question_pool_size = parsed_json.result["questions"].size()
-		question_pool_size = parsed_json.result.size()
+	
 	for number in range(question_pool_size):
 		question_pool.append(number)
-	print(question_pool)
+	#print(question_pool)
 
 
 func _on_AnswerButton1_pressed():
@@ -117,8 +117,6 @@ func _check_for_correct_answer(given_answer_id):
 	var right_answer = parsed_json.result[current_question]["correct"]
 	if right_answer == given_answer_id:
 		SoundManager.play_sound($QuipSounds, "RIGHT_ANSWER")
-		print("right answer")
 	else:
 		SoundManager.play_sound($QuipSounds, "WRONG_ANSWER")
-		print("wrong answer")
 	_on_answer_given()

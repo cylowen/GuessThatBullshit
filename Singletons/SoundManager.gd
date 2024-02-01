@@ -1,13 +1,5 @@
 extends Node
 
-
-const BUTTON_CLICK = "click"
-const TICKING_ANSWER = "ticking"
-const QUIZ_OPENING = "opening"
-const QUIZ_CLOSING = "closing"
-const RIGHT_ANSWER = "right"
-const WRONG_ANSWER = "wrong"
-
 const SOUNDS = {
 	BUTTON_CLICK = preload("res://Assets/Music/button click.wav"),
 	TICKING_ANSWER = preload("res://Assets/Music/clock ticking_answer time.wav"),
@@ -18,13 +10,11 @@ const SOUNDS = {
 }
 
 func play_sound(player: AudioStreamPlayer, key: String) -> void:
-	print("change sound")
 	if !SOUNDS.has(key):
-		print("not found")
+		print("sound found")
 		return
 	else:
 		player.stop()
 		player.stream = SOUNDS[key]
-		print("play!?")
 		player.play()
 		

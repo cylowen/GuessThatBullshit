@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="TruthinessGame"
-run/main_scene="res://WelcomeScreen.tscn"
+run/main_scene="res://Scenes/MainScene/WelcomeScreen.tscn"
 
 [autoload]
 
