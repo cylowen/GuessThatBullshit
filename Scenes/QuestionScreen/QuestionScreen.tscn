@@ -24,13 +24,11 @@ script = ExtResource( 3 )
 margin_left = 239.0
 margin_top = 99.0
 margin_right = 647.0
-margin_bottom = 583.0
+margin_bottom = 410.0
 grow_horizontal = 0
 grow_vertical = 0
 custom_fonts/normal_font = SubResource( 1 )
 text = "Who said \"Facts are stupid things\"?"
-fit_content_height = true
-scroll_active = false
 
 [node name="AnswersContainer" type="VBoxContainer" parent="."]
 margin_left = 236.0

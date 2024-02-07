@@ -1,18 +1,20 @@
 extends Control
 
 var question_pool = []
-const NUMBER_OF_QUESTIONS = 5
+const NUMBER_OF_QUESTIONS = 7
 var remaining_questions
 var parsed_json
 var current_question
 #Path to the question JSON
-var file_path = "res://Assets/csvjson.json"
+#const FILE_PATH = "res://Assets/csvjson.json"
+const FILE_PATH = "res://Assets/0207csvjson.json"
+
 var question_pool_size: int = 0
 
 func _ready():
 	SignalManager.connect("questions_started", self, "_questions_started")
 	var file = File.new()
-	if file.open(file_path, File.READ) == OK: # Read the entire content of the file
+	if file.open(FILE_PATH, File.READ) == OK: # Read the entire content of the file
 		var file_text = file.get_as_text() # Close the file
 		file.close()
 		parsed_json = JSON.parse(file_text)
@@ -42,6 +44,7 @@ func _get_new_question():
 	print(current_question)
 	_display_new_question()
 	$QuestionTimer.start()
+	$Timer/Label.visible = true
 	$Timer/Label2.visible = true
 	set_process(true)
 	
@@ -64,6 +67,7 @@ func _on_Timer_timeout():
 func _display_answer():
 	set_process(false)
 	$Timer/Label2.visible = false
+	$Timer/Label.visible = false
 	$QuestionLabel.text = parsed_json.result[current_question]["message"]
 	#$QuestionLabel.text = parsed_json.result["questions"][current_question]["message"]
 	$AnswersContainer.visible = false
@@ -95,10 +99,13 @@ func reset_scene():
 	set_process(false)
 	$ContinueButton.visible = false
 	remaining_questions = NUMBER_OF_QUESTIONS
-	
-	for number in range(question_pool_size):
-		question_pool.append(number)
-	#print(question_pool)
+	if question_pool.size() >= remaining_questions:
+		return
+	else:
+		question_pool = []
+		for number in range(question_pool_size):
+			question_pool.append(number)
+	print(question_pool)
 
 
 func _on_AnswerButton1_pressed():
@@ -112,11 +119,31 @@ func _on_AnswerButton2_pressed():
 func _on_AnswerButton3_pressed():
 	_check_for_correct_answer(3)
 
+func string_to_array_of_integers(s: String) -> Array:
+	var result = []
+	# Check if the variable is a string
+	if typeof(s) == TYPE_STRING:
+		# Split the string by commas and convert each substring to an integer
+		var substrings = s.split(",")
+		for substring in substrings:
+			result.append(int(substring))
+	return result
 
-func _check_for_correct_answer(given_answer_id):
-	var right_answer = parsed_json.result[current_question]["correct"]
-	if right_answer == given_answer_id:
+func play_quip_sounds(correct_answer: bool):
+	if correct_answer:
 		SoundManager.play_sound($QuipSounds, "RIGHT_ANSWER")
 	else:
 		SoundManager.play_sound($QuipSounds, "WRONG_ANSWER")
+
+func _check_for_correct_answer(given_answer_id):
+	var right_answer = parsed_json.result[current_question]["correct"]
+	if typeof(right_answer) == TYPE_STRING:
+		var right_answers = string_to_array_of_integers(right_answer)
+		var rightAnswerExists = false
+		for answer in right_answers:
+			if answer == given_answer_id:
+				rightAnswerExists = true
+		play_quip_sounds(rightAnswerExists)
+	else:
+		play_quip_sounds(right_answer == given_answer_id)
 	_on_answer_given()
