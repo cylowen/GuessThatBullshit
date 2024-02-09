@@ -10,8 +10,6 @@ func set_button_text(text: String, button_name:String) -> void:
 		$JoinGame/Label.text = text
 
 func set_button_clickability(clickability: bool, button_name:String) -> void:
-	#if button_name == "orange_button":
-	#	$Timer.mouse_filter = MOUSE_FILTER_IGNORE
 	if button_name == "blue_button":
 		if !clickability:
 			$HostGame.mouse_filter = Control.MOUSE_FILTER_IGNORE

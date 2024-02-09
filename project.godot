@@ -17,6 +17,7 @@ run/main_scene="res://Scenes/MainScene/WelcomeScreen.tscn"
 
 SignalManager="*res://Singletons/SignalManager.gd"
 SoundManager="*res://Singletons/SoundManager.gd"
+ScoreManager="*res://Singletons/ScoreManager.gd"
 
 [display]
 

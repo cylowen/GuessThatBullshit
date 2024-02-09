@@ -14,7 +14,11 @@ func play_sound(player: AudioStreamPlayer, key: String) -> void:
 		print("sound found")
 		return
 	else:
-		player.stop()
+		if player.playing:
+			player.stop()
 		player.stream = SOUNDS[key]
 		player.play()
 		
+
+func stop_player(player: AudioStreamPlayer) -> void:
+	player.stop()

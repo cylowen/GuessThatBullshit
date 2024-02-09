@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/QuizButton.tres" type="Theme" id=1]
 [ext_resource path="res://Assets/Skranji-Regular.ttf" type="DynamicFontData" id=2]
@@ -13,6 +13,13 @@ font_data = ExtResource( 2 )
 [sub_resource type="DynamicFont" id=2]
 size = 64
 font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 23
+font_data = ExtResource( 2 )
+
+[sub_resource type="Theme" id=4]
+Label/fonts/font = SubResource( 3 )
 
 [node name="QuestionScreen" type="Control"]
 anchor_right = 1.0
@@ -60,10 +67,6 @@ text = "Jack Sparrow"
 wait_time = 30.0
 one_shot = true
 
-[node name="AnswerTimer" type="Timer" parent="."]
-wait_time = 60.0
-one_shot = true
-
 [node name="Timer" type="Control" parent="."]
 margin_left = 798.0
 margin_top = 226.0
@@ -103,9 +106,16 @@ text = "Continue"
 
 [node name="QuipSounds" type="AudioStreamPlayer" parent="."]
 
+[node name="ProgressLabel" type="Label" parent="."]
+margin_left = 592.0
+margin_top = 404.0
+margin_right = 632.0
+margin_bottom = 442.0
+theme = SubResource( 4 )
+text = "x/y"
+
 [connection signal="pressed" from="AnswersContainer/AnswerButton1" to="." method="_on_AnswerButton1_pressed"]
 [connection signal="pressed" from="AnswersContainer/AnswerButton2" to="." method="_on_AnswerButton2_pressed"]
 [connection signal="pressed" from="AnswersContainer/AnswerButton3" to="." method="_on_AnswerButton3_pressed"]
 [connection signal="timeout" from="QuestionTimer" to="." method="_on_Timer_timeout"]
-[connection signal="timeout" from="AnswerTimer" to="." method="_on_AnswerTimer_timeout"]
 [connection signal="pressed" from="ContinueButton" to="." method="_on_ContinueButton_pressed"]

@@ -5,18 +5,24 @@ func _ready():
 	SignalManager.connect("on_green_button_pressed", self, "_get_green_button_signal")
 	SignalManager.connect("questions_started", self, "_show_questions")
 	SignalManager.connect("on_game_ended", self, "_show_credits")
+	SignalManager.connect("on_answer_given", self, "on_answer_given")
+	SignalManager.connect("on_question_shown", self, "on_question_shown")
 	_button_config()
 	SoundManager.play_sound($Sound, "QUIZ_OPENING")
 	
 func _get_blue_button_signal():
-	print("blue mewooww")
 	SoundManager.play_sound($QuipSounds, "BUTTON_CLICK")
 	SignalManager.emit_signal("questions_started")
 
 func _get_green_button_signal():
-	print("green wouf")
 	SoundManager.play_sound($QuipSounds, "BUTTON_CLICK")
 	_reset_game()
+	
+func on_answer_given():
+	SoundManager.stop_player($Sound)
+	
+func on_question_shown():
+	SoundManager.play_sound($Sound, "TICKING_ANSWER")
 	
 func _show_questions():
 	SoundManager.play_sound($Sound, "TICKING_ANSWER")
@@ -38,6 +44,7 @@ func _reset_game():
 	$StartScreen.visible = true
 	_button_config()
 	SoundManager.play_sound($Sound, "QUIZ_OPENING")
+	ScoreManager.reset()
 	
 func _button_config():
 	$Background.set_button_text("", "green_button")
