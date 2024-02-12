@@ -17,10 +17,10 @@ visible = false
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.0
-margin_left = 475.0
-margin_top = 302.0
-margin_right = 475.0
-margin_bottom = 302.0
+margin_left = 357.0
+margin_top = 182.0
+margin_right = 357.0
+margin_bottom = 182.0
 
 [node name="StartScreen" parent="." instance=ExtResource( 1 )]
 
