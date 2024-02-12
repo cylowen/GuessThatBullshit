@@ -12,11 +12,14 @@ var question_pool_size: int = 0
 func _ready():
 	SignalManager.connect("questions_started", self, "_questions_started")
 	var file = File.new()
-	if file.open(FILE_PATH, File.READ) == OK: # Read the entire content of the file
+	var error = file.open(FILE_PATH, File.READ)
+	if error == OK: # Read the entire content of the file
 		var file_text = file.get_as_text() # Close the file
 		file.close()
 		parsed_json = JSON.parse(file_text)
 		question_pool_size = parsed_json.result.size()
+	else:
+		printerr("An error occured when loading %s: %d" % [FILE_PATH, error])
 	reset_scene()
 	
 
