@@ -22,3 +22,11 @@ func play_sound(player: AudioStreamPlayer, key: String) -> void:
 
 func stop_player(player: AudioStreamPlayer) -> void:
 	player.stop()
+
+func toggle_mute() -> void:
+	var bus_index = AudioServer.get_bus_index("Master")
+	AudioServer.set_bus_mute(bus_index, !AudioServer.is_bus_mute(bus_index))
+
+func is_mute() -> bool:
+	var bus_index = AudioServer.get_bus_index("Master")
+	return AudioServer.is_bus_mute(bus_index)

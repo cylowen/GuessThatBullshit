@@ -11,12 +11,16 @@ func _ready():
 	SoundManager.play_sound($Sound, "QUIZ_OPENING")
 	
 func _get_blue_button_signal():
-	SoundManager.play_sound($QuipSounds, "BUTTON_CLICK")
-	SignalManager.emit_signal("questions_started")
+	if ($Background.get_button_text("blue_button") == "Start Game"):
+		SoundManager.play_sound($QuipSounds, "BUTTON_CLICK")
+		SignalManager.emit_signal("questions_started")
+	else:
+		_reset_game()
 
 func _get_green_button_signal():
 	SoundManager.play_sound($QuipSounds, "BUTTON_CLICK")
-	_reset_game()
+	SoundManager.toggle_mute()
+	$Background.set_button_text("Sound %s" % ("Off" if SoundManager.is_mute() else "On"), "green_button")
 	
 func on_answer_given():
 	SoundManager.stop_player($Sound)
@@ -35,8 +39,8 @@ func _show_credits():
 	SoundManager.play_sound($Sound, "QUIZ_CLOSING")
 	$QuestionScreen.visible = false
 	$CreditsScreen.visible = true
-	$Background.set_button_text("Home", "green_button")
-	$Background.set_button_clickability(true, "green_button")
+	$Background.set_button_text("Home", "blue_button")
+	$Background.set_button_clickability(true, "blue_button")
 
 func _reset_game():
 	$QuestionScreen.reset_scene()
@@ -47,7 +51,7 @@ func _reset_game():
 	ScoreManager.reset()
 	
 func _button_config():
-	$Background.set_button_text("", "green_button")
-	$Background.set_button_clickability(false, "green_button")
+	$Background.set_button_text("Sound %s" % ("Off" if SoundManager.is_mute() else "On"), "green_button")
+	$Background.set_button_clickability(true, "green_button")
 	$Background.set_button_text("Start Game", "blue_button")
 	$Background.set_button_clickability(true, "blue_button")

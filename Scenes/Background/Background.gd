@@ -9,6 +9,17 @@ func set_button_text(text: String, button_name:String) -> void:
 	if button_name == "green_button":
 		$JoinGame/Label.text = text
 
+func get_button_text(button_name:String) -> String:
+	if button_name == "orange_button":
+		return $Timer.get_node("Label2").text
+	if button_name == "blue_button":
+		return $HostGame.get_node("Label").text
+	if button_name == "green_button":
+		return $JoinGame.get_node("Label").text
+	
+	push_error("Button not found: %s" % button_name)
+	return ""
+
 func set_button_clickability(clickability: bool, button_name:String) -> void:
 	if button_name == "blue_button":
 		if !clickability:
